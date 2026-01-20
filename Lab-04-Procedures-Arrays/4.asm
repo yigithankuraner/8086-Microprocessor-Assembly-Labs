@@ -1,0 +1,52 @@
+ORG 100h
+
+CALL MIRROR
+CALL COPY
+CALL PRINT
+
+RET
+
+MIRROR PROC
+    LEA SI, ARRAY
+    LEA DI, ARRAY
+    ADD DI, 9
+    MOV CX, 8
+    
+SWAP_LOOP:
+    MOV AL, [SI]
+    MOV BL, [DI]
+    MOV [SI], BL
+    MOV [DI], AL
+    INC SI
+    INC DI
+    LOOP SWAP_LOOP
+    RET
+MIRROR ENDP
+
+COPY PROC
+    LEA SI, ARRAY
+    MOV DI, 2000h
+    MOV CX, 17
+    CLD
+    REP MOVSB
+    RET
+COPY ENDP
+
+PRINT PROC
+    LEA SI, ARRAY
+    MOV CX, 17
+    
+PRINT_LOOP:
+    MOV AL, [SI]
+    MOV AH, 0Eh
+    INT 10h
+    INC SI
+    LOOP PRINT_LOOP
+    RET
+PRINT ENDP
+
+ARRAY DB 'C','O','M','P','U','T','E','R','|','1','2','3','4','5','6','7','8'
+
+END
+
+
